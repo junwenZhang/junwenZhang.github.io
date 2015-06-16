@@ -81,6 +81,61 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/06/16/JPG-Flash-Flag/" title="JPG Flash Flag" itemprop="url">JPG Flash Flag</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="junwenZhang" target="_blank" itemprop="author">junwenZhang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-16T07:57:55.000Z" itemprop="datePublished"> 发表于 2015-06-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯<br>但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码<br>   ExifInterface exif = new ExifInterface(mFilePath);<br>   String tmp = exif.getAttribute(ExifInterface.TAG_FLASH);<br>   //Exif 2.2 Specifies the resulting Flash tag values<br>   //0000.H = Flash did not fire<br>   //0010.H = Flash did not fire, compulsory flash mode<br>   //0018.H = Flash did not fire, auto mode</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Image/">Image</a><a href="/tags/Study/">Study</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/06/16/my-first-post/" title="Junwen Blog" itemprop="url">Junwen Blog</a>
   </h1>
   <p class="article-author">By
@@ -163,6 +218,14 @@
 		
 			
 				<li><a href="/tags/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Study/" title="Study">Study<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Image/" title="Image">Image<sup>1</sup></a></li>
 			
 		
 		</ul>
