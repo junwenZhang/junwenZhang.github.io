@@ -4,23 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JPG Flash Flag | junwenZhang&#39;s room</title>
+    <title>AndroidStudio快速导入Eclipse工程 | junwenZhang&#39;s room</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="junwenZhang">
     
 
     
-    <meta name="description" content="相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码   ExifInterface exif = new ExifInterface(mFilePath);   String tmp = exif.getAttribute(ExifInterface.TAG_">
+    <meta name="description" content="前言   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决
+详细步骤1.下载安装Android Studiohttp://">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JPG Flash Flag">
-<meta property="og:url" content="http://junwenzhang.com/2015/06/16/JPG-Flash-Flag/index.html">
+<meta property="og:title" content="AndroidStudio快速导入Eclipse工程">
+<meta property="og:url" content="http://junwenzhang.com/2015/06/28/AndroidStuido快速导入Eclipse工程/index.html">
 <meta property="og:site_name" content="junwenZhang's room">
-<meta property="og:description" content="相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码   ExifInterface exif = new ExifInterface(mFilePath);   String tmp = exif.getAttribute(ExifInterface.TAG_">
-<meta property="og:updated_time" content="2015-06-16T08:01:13.000Z">
+<meta property="og:description" content="前言   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决
+详细步骤1.下载安装Android Studiohttp://">
+<meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/f6593c79f4ffb6b35c0e838f206049396e7549d8">
+<meta property="og:image" content="http://img4.tbcdn.cn/L1/461/1/87228bdd71b0c4c885bece086960d63a4cedd4ed">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/4e57bbb4d7f52d67d29a74c5d22a119ca79f5e91">
+<meta property="og:image" content="http://img3.tbcdn.cn/L1/461/1/9ae6aa809cd634af1c500018c6d816fd6ed6cbb7">
+<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/66fc58fd2eefba2aef7fd5dda3ebd78be99d6dfc">
+<meta property="og:updated_time" content="2015-06-28T03:00:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JPG Flash Flag">
-<meta name="twitter:description" content="相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码   ExifInterface exif = new ExifInterface(mFilePath);   String tmp = exif.getAttribute(ExifInterface.TAG_">
+<meta name="twitter:title" content="AndroidStudio快速导入Eclipse工程">
+<meta name="twitter:description" content="前言   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决
+详细步骤1.下载安装Android Studiohttp://">
 
     
     <link rel="alternative" href="/atom.xml" title="junwenZhang&#39;s room" type="application/atom+xml">
@@ -80,14 +88,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/16/JPG-Flash-Flag/" title="JPG Flash Flag" itemprop="url">JPG Flash Flag</a>
+      <a href="/2015/06/28/AndroidStuido快速导入Eclipse工程/" title="AndroidStudio快速导入Eclipse工程" itemprop="url">AndroidStudio快速导入Eclipse工程</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="junwenZhang" target="_blank" itemprop="author">junwenZhang</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-16T07:57:55.000Z" itemprop="datePublished"> 发表于 2015-06-16</time>
+    <time datetime="2015-06-28T02:55:00.000Z" itemprop="datePublished"> 发表于 2015-06-28</time>
     
   </p>
 </header>
@@ -96,20 +104,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#详细步骤"><span class="toc-number">2.</span> <span class="toc-text">详细步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载安装Android_Studio"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.下载安装Android Studio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-导入Eclipse工程"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.导入Eclipse工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_配置修改Project"><span class="toc-number">2.0.3.</span> <span class="toc-text">3. 配置修改Project</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遗留问题"><span class="toc-number">3.</span> <span class="toc-text">遗留问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-_Android_Studio_是将工程文件copy到一个新的地方进行修改，Eclipse_project和Android_studio无法共同修改同一份代码"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">1. Android Studio 是将工程文件copy到一个新的地方进行修改，Eclipse project和Android studio无法共同修改同一份代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-_Android_Studio_编译时不识别java-symbol的问题需要继续跟进"><span class="toc-number">3.0.0.2.</span> <span class="toc-text">2. Android Studio 编译时不识别java-symbol的问题需要继续跟进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-_集成Git进行代码版本管理"><span class="toc-number">3.0.0.3.</span> <span class="toc-text">3. 集成Git进行代码版本管理</span></a></li></ol></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<p>相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯<br>但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码<br>   ExifInterface exif = new ExifInterface(mFilePath);<br>   String tmp = exif.getAttribute(ExifInterface.TAG_FLASH);<br>   //Exif 2.2 Specifies the resulting Flash tag values<br>   //0000.H = Flash did not fire<br>   //0010.H = Flash did not fire, compulsory flash mode<br>   //0018.H = Flash did not fire, auto mode</p>
-  
+		<h1 id="前言">前言</h1><p>   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决</p>
+<h1 id="详细步骤">详细步骤</h1><h3 id="1-下载安装Android_Studio">1.下载安装Android Studio</h3><p><a href="http://www.android-studio.org/" target="_blank" rel="external">http://www.android-studio.org/</a><br><a href="http://developer.android.com/sdk/index.html" target="_blank" rel="external">http://developer.android.com/sdk/index.html</a></p>
+<h3 id="2-导入Eclipse工程">2.导入Eclipse工程</h3><p><img src="http://img2.tbcdn.cn/L1/461/1/f6593c79f4ffb6b35c0e838f206049396e7549d8" alt="import"><br>按照提示进行下一步，Android Stuido会将当前的Eclipse project进行copy到新的路径下，原有的依赖关系会自动设置，无需担心</p>
+<h3 id="3-_配置修改Project">3. 配置修改Project</h3><ul>
+<li>编译时不识别java-symbol，暂时注释(不影响运行调试)<br><img src="http://img4.tbcdn.cn/L1/461/1/87228bdd71b0c4c885bece086960d63a4cedd4ed" alt="hw_symbols"></li>
+<li>因为多个 jar 包里包含了同样的文件（NOTICE.txt/LICENSE.txt），导致打包时因为担心相互覆盖问题而提示出错,所以需要在Module Gallery的build.gradle文件中加入红色部分<br><img src="http://img1.tbcdn.cn/L1/461/1/4e57bbb4d7f52d67d29a74c5d22a119ca79f5e91" alt="build_gradle"></li>
+<li><p>可能是因为AS默认只导入lib目录下的jar包，子文件夹下jar不能自动导入，所以需要拷贝自动导入时缺失的两个lib文件TA4AIDL.jar、tyid.jar到新生成的Android stuido project目录中，以我的为例是：<br>~/workspace/Gallery/gallery/libs,并在Module Gallery的build gradle文件中加入</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/TA4AIDL.jar'</span>)</span></span>                                                                                                                                       </span><br><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/tyid.jar'</span>)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加签名。Module gallery上点击右键选择open module settings，按照下图进行设置<br><img src="http://img3.tbcdn.cn/L1/461/1/9ae6aa809cd634af1c500018c6d816fd6ed6cbb7" alt="sign_config"><br>选择设置好的签名<br><img src="http://img1.tbcdn.cn/L1/461/1/66fc58fd2eefba2aef7fd5dda3ebd78be99d6dfc" alt="flavor_config"></p>
+</li>
+<li>运行设置。菜单栏Run中点击Edit configuration，选择Target Device为Usb device</li>
+</ul>
+<h1 id="遗留问题">遗留问题</h1><h4 id="1-_Android_Studio_是将工程文件copy到一个新的地方进行修改，Eclipse_project和Android_studio无法共同修改同一份代码">1. Android Studio 是将工程文件copy到一个新的地方进行修改，Eclipse project和Android studio无法共同修改同一份代码</h4><h4 id="2-_Android_Studio_编译时不识别java-symbol的问题需要继续跟进">2. Android Studio 编译时不识别java-symbol的问题需要继续跟进</h4><h4 id="3-_集成Git进行代码版本管理">3. 集成Git进行代码版本管理</h4>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android技术/">Android技术</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Image/">Image</a><a href="/tags/Study/">Study</a>
+  <span></span> <a href="/tags/Android-Studio/">Android Studio</a><a href="/tags/Eclipse/">Eclipse</a>
   </div>
 
 </div>
@@ -118,7 +143,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://junwenzhang.com/2015/06/16/JPG-Flash-Flag/" data-title="JPG Flash Flag | junwenZhang&#39;s room" data-tsina="null" class="share clearfix">
+	  <div data-url="http://junwenzhang.com/2015/06/28/AndroidStuido快速导入Eclipse工程/" data-title="AndroidStudio快速导入Eclipse工程 | junwenZhang&#39;s room" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -131,19 +156,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/16/马拉松计划/" title="马拉松计划">
-  <strong>上一篇：</strong><br/>
-  <span>
-  马拉松计划</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/16/my-first-post/"  title="Junwen Blog">
+<a href="/2015/06/17/Mac下基于Github搭建个人Blog/"  title="Mac下基于Github搭建个人Blog">
  <strong>下一篇：</strong><br/> 
- <span>Junwen Blog
+ <span>Mac下基于Github搭建个人Blog
 </span>
 </a>
 </div>
@@ -152,7 +169,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/06/16/JPG-Flash-Flag/" data-title="JPG Flash Flag" data-url="http://junwenzhang.com/2015/06/16/JPG-Flash-Flag/"></div>
+	<div class="ds-thread" data-thread-key="2015/06/28/AndroidStuido快速导入Eclipse工程/" data-title="AndroidStudio快速导入Eclipse工程" data-url="http://junwenzhang.com/2015/06/28/AndroidStuido快速导入Eclipse工程/"></div>
 </section>
 
 
@@ -162,7 +179,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#详细步骤"><span class="toc-number">2.</span> <span class="toc-text">详细步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载安装Android_Studio"><span class="toc-number">2.0.1.</span> <span class="toc-text">1.下载安装Android Studio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-导入Eclipse工程"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.导入Eclipse工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_配置修改Project"><span class="toc-number">2.0.3.</span> <span class="toc-text">3. 配置修改Project</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遗留问题"><span class="toc-number">3.</span> <span class="toc-text">遗留问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-_Android_Studio_是将工程文件copy到一个新的地方进行修改，Eclipse_project和Android_studio无法共同修改同一份代码"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">1. Android Studio 是将工程文件copy到一个新的地方进行修改，Eclipse project和Android studio无法共同修改同一份代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-_Android_Studio_编译时不识别java-symbol的问题需要继续跟进"><span class="toc-number">3.0.0.2.</span> <span class="toc-text">2. Android Studio 编译时不识别java-symbol的问题需要继续跟进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-_集成Git进行代码版本管理"><span class="toc-number">3.0.0.3.</span> <span class="toc-text">3. 集成Git进行代码版本管理</span></a></li></ol></li></ol></li></ol></li></ol>
  
   </div>
 

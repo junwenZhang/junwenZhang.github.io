@@ -81,6 +81,80 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/06/28/AndroidStuido快速导入Eclipse工程/" title="AndroidStudio快速导入Eclipse工程" itemprop="url">AndroidStudio快速导入Eclipse工程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="junwenZhang" target="_blank" itemprop="author">junwenZhang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-28T02:55:00.000Z" itemprop="datePublished"> 发表于 2015-06-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="前言">前言</h1><p>   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决</p>
+<h1 id="详细步骤">详细步骤</h1><h3 id="1-下载安装Android_Studio">1.下载安装Android Studio</h3><p><a href="http://www.android-studio.org/" target="_blank" rel="external">http://www.android-studio.org/</a><br><a href="http://developer.android.com/sdk/index.html" target="_blank" rel="external">http://developer.android.com/sdk/index.html</a></p>
+<h3 id="2-导入Eclipse工程">2.导入Eclipse工程</h3><p><img src="http://img2.tbcdn.cn/L1/461/1/f6593c79f4ffb6b35c0e838f206049396e7549d8" alt="import"><br>按照提示进行下一步，Android Stuido会将当前的Eclipse project进行copy到新的路径下，原有的依赖关系会自动设置，无需担心</p>
+<h3 id="3-_配置修改Project">3. 配置修改Project</h3><ul>
+<li>编译时不识别java-symbol，暂时注释(不影响运行调试)<br><img src="http://img4.tbcdn.cn/L1/461/1/87228bdd71b0c4c885bece086960d63a4cedd4ed" alt="hw_symbols"></li>
+<li>因为多个 jar 包里包含了同样的文件（NOTICE.txt/LICENSE.txt），导致打包时因为担心相互覆盖问题而提示出错,所以需要在Module Gallery的build.gradle文件中加入红色部分<br><img src="http://img1.tbcdn.cn/L1/461/1/4e57bbb4d7f52d67d29a74c5d22a119ca79f5e91" alt="build_gradle"></li>
+<li><p>可能是因为AS默认只导入lib目录下的jar包，子文件夹下jar不能自动导入，所以需要拷贝自动导入时缺失的两个lib文件TA4AIDL.jar、tyid.jar到新生成的Android stuido project目录中，以我的为例是：<br>~/workspace/Gallery/gallery/libs,并在Module Gallery的build gradle文件中加入</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/TA4AIDL.jar'</span>)</span></span>                                                                                                                                       </span><br><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/tyid.jar'</span>)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加签名。Module gallery上点击右键选择open module settings，按照下图进行设置<br><img src="http://img3.tbcdn.cn/L1/461/1/9ae6aa809cd634af1c500018c6d816fd6ed6cbb7" alt="sign_config"><br>选择设置好的签名<br><img src="http://img1.tbcdn.cn/L1/461/1/66fc58fd2eefba2aef7fd5dda3ebd78be99d6dfc" alt="flavor_config"></p>
+</li>
+<li>运行设置。菜单栏Run中点击Edit configuration，选择Target Device为Usb device</li>
+</ul>
+<h1 id="遗留问题">遗留问题</h1><h4 id="1-_Android_Studio_是将工程文件copy到一个新的地方进行修改，Eclipse_project和Android_studio无法共同修改同一份代码">1. Android Studio 是将工程文件copy到一个新的地方进行修改，Eclipse project和Android studio无法共同修改同一份代码</h4><h4 id="2-_Android_Studio_编译时不识别java-symbol的问题需要继续跟进">2. Android Studio 编译时不识别java-symbol的问题需要继续跟进</h4><h4 id="3-_集成Git进行代码版本管理">3. 集成Git进行代码版本管理</h4>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android技术/">Android技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android-Studio/">Android Studio</a><a href="/tags/Eclipse/">Eclipse</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/06/28/AndroidStuido快速导入Eclipse工程/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/06/28/AndroidStuido快速导入Eclipse工程/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/06/17/Mac下基于Github搭建个人Blog/" title="Mac下基于Github搭建个人Blog" itemprop="url">Mac下基于Github搭建个人Blog</a>
   </h1>
   <p class="article-author">By
@@ -509,6 +583,10 @@
 		<ul>
 		
 		  
+			<li><a href="/categories/Android技术/" title="Android技术">Android技术<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/个人站点/" title="个人站点">个人站点<sup>1</sup></a></li>
 		  
 		
@@ -559,6 +637,14 @@
 		
 			
 				<li><a href="/tags/Image/" title="Image">Image<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Eclipse/" title="Eclipse">Eclipse<sup>1</sup></a></li>
 			
 		
 		</ul>
