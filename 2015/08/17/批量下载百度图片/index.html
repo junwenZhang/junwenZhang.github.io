@@ -1,0 +1,534 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+  
+<script type="text/javascript">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?95abaf5b7869332b63c3c8085d28e860";
+      var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+</script>
+
+
+  <head>
+  <meta charset="UTF-8">
+  
+    <title>用Python批量下载百度搜索出来的图片 | junwenZhang&#39;s room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="junwenZhang">
+    
+
+    
+    <meta name="description" content="经常要找一些图片素材，每次都是通过百度来进行搜索找图，但每次打开一张图片下载未免有点效率太低尝试写一个脚本来做自动下载图片，Python是最适合做这个事情的语言了，直接看代码吧
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Python批量下载百度搜索出来的图片">
+<meta property="og:url" content="http://junwenzhang.com/2015/08/17/批量下载百度图片/index.html">
+<meta property="og:site_name" content="junwenZhang's room">
+<meta property="og:description" content="经常要找一些图片素材，每次都是通过百度来进行搜索找图，但每次打开一张图片下载未免有点效率太低尝试写一个脚本来做自动下载图片，Python是最适合做这个事情的语言了，直接看代码吧
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960">
+<meta property="og:updated_time" content="2015-08-17T09:09:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Python批量下载百度搜索出来的图片">
+<meta name="twitter:description" content="经常要找一些图片素材，每次都是通过百度来进行搜索找图，但每次打开一张图片下载未免有点效率太低尝试写一个脚本来做自动下载图片，Python是最适合做这个事情的语言了，直接看代码吧
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960">
+
+    
+    <link rel="alternative" href="/atom.xml" title="junwenZhang&#39;s room" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="junwenZhang&#39;s room" title="junwenZhang&#39;s room"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="junwenZhang&#39;s room">junwenZhang&#39;s room</a></h1>
+				<h2 class="blog-motto">stay hungry, stay foolish</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:junwenzhang.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/17/批量下载百度图片/" title="用Python批量下载百度搜索出来的图片" itemprop="url">用Python批量下载百度搜索出来的图片</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="junwenZhang" target="_blank" itemprop="author">junwenZhang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-17T09:00:00.000Z" itemprop="datePublished"> 发表于 2015-08-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>经常要找一些图片素材，每次都是通过百度来进行搜索找图，但每次打开一张图片下载未免有点效率太低<br>尝试写一个脚本来做自动下载图片，Python是最适合做这个事情的语言了，直接看代码吧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib, httplib, urlparse  </span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment">#judge url exists or not,by others</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">httpExists</span><span class="params">(url)</span>:</span>  </span><br><span class="line">    host, path = urlparse.urlsplit(url)[<span class="number">1</span>:<span class="number">3</span>]  </span><br><span class="line">    <span class="keyword">if</span> <span class="string">':'</span> <span class="keyword">in</span> host:  </span><br><span class="line">        <span class="comment"># port specified, try to use it  </span></span><br><span class="line">        host, port = host.split(<span class="string">':'</span>, <span class="number">1</span>)  </span><br><span class="line">        <span class="keyword">try</span>:  </span><br><span class="line">            port = int(port)  </span><br><span class="line">        <span class="keyword">except</span> ValueError:  </span><br><span class="line">            <span class="keyword">print</span> <span class="string">'invalid port number %r'</span> % (port,)  </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">else</span>:  </span><br><span class="line">        <span class="comment"># no port specified, use default port  </span></span><br><span class="line">        port = <span class="keyword">None</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        connection = httplib.HTTPConnection(host, port=port)  </span><br><span class="line">        connection.request(<span class="string">"HEAD"</span>, path)  </span><br><span class="line">        resp = connection.getresponse( )  </span><br><span class="line">        <span class="keyword">if</span> resp.status == <span class="number">200</span>:       <span class="comment"># normal 'found' status  </span></span><br><span class="line">            found = <span class="keyword">True</span>  </span><br><span class="line">        <span class="keyword">elif</span> resp.status == <span class="number">302</span>:     <span class="comment"># recurse on temporary redirect  </span></span><br><span class="line">            found = httpExists(urlparse.urljoin(url,resp.getheader(<span class="string">'location'</span>, <span class="string">''</span>)))  </span><br><span class="line">        <span class="keyword">else</span>:                        <span class="comment"># everything else -&gt; not found  </span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">"Status %d %s : %s"</span> % (resp.status, resp.reason, url)  </span><br><span class="line">            found = <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">except</span> Exception, e:  </span><br><span class="line">        <span class="keyword">print</span> e.__class__, e, url  </span><br><span class="line">        found = <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">return</span> found  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#get html src,return lines[]</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetHtmlLines</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> : <span class="keyword">return</span>  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> httpExists(url): <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        page = urllib.urlopen(url)     </span><br><span class="line">        html = page.readlines()  </span><br><span class="line">        page.close()  </span><br><span class="line">        <span class="keyword">return</span> html</span><br><span class="line">    <span class="keyword">except</span>:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"gGetHtmlLines() error!"</span>  </span><br><span class="line">        <span class="keyword">return</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">#get html src,return string</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetHtml</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> : <span class="keyword">return</span>  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> httpExists(url): <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        page = urllib.urlopen(url)     </span><br><span class="line">        html = page.read()  </span><br><span class="line">        page.close()  </span><br><span class="line">        <span class="keyword">return</span> html  </span><br><span class="line">    <span class="keyword">except</span>:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"gGetHtml() error!"</span>  </span><br><span class="line">        <span class="keyword">return</span>  </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetFileName</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span>: <span class="keyword">return</span> <span class="keyword">None</span>  </span><br><span class="line">    <span class="keyword">if</span> url==<span class="string">""</span> : <span class="keyword">return</span> <span class="string">""</span>  </span><br><span class="line">    arr=url.split(<span class="string">"/"</span>)  </span><br><span class="line">    <span class="keyword">return</span> arr[len(arr)-<span class="number">1</span>]  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetAbslLink</span><span class="params">(url,link)</span>:</span>  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'getAbsLink '</span> + url + <span class="string">' link '</span> + link</span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> <span class="keyword">or</span> link == <span class="keyword">None</span> : <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">if</span> url==<span class="string">''</span> <span class="keyword">or</span> link==<span class="string">''</span> : <span class="keyword">return</span> url</span><br><span class="line">    <span class="keyword">return</span> link</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetRegList</span><span class="params">(linesList,reObj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> linesList==<span class="keyword">None</span> : <span class="keyword">return</span>   </span><br><span class="line">    rtnList=[]  </span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> linesList:  </span><br><span class="line">        matchs = reObj.findall(line)</span><br><span class="line">        <span class="keyword">if</span> matchs!=<span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">for</span> foundStr <span class="keyword">in</span> matchs:</span><br><span class="line">                <span class="keyword">if</span> foundStr <span class="keyword">not</span> <span class="keyword">in</span> rtnList:</span><br><span class="line">                    rtnList.append(foundStr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> rtnList  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownloadWithFilename</span><span class="params">(url,savePath,file)</span>:</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        urlopen=urllib.URLopener()  </span><br><span class="line">        fp = urlopen.open(url)  </span><br><span class="line">        data = fp.read()  </span><br><span class="line">        fp.close()  </span><br><span class="line">        file=open(savePath + file,<span class="string">'w+b'</span>)  </span><br><span class="line">        file.write(data)  </span><br><span class="line">        file.close()  </span><br><span class="line">    <span class="keyword">except</span> IOError:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"download error!"</span>+ url  </span><br><span class="line">          </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownload</span><span class="params">(url,savePath)</span>:</span>  </span><br><span class="line">    fileName = gGetFileName(url)  </span><br><span class="line">    gDownloadWithFilename(url,savePath,fileName)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownloadHtmlJpg</span><span class="params">(downloadUrl,savePath)</span>:</span>  </span><br><span class="line">    lines= gGetHtmlLines(downloadUrl)  </span><br><span class="line">    regx = <span class="string">r"""objURL":"(\S+)\.jpg"""</span></span><br><span class="line">    reObj = re.compile(regx)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'regx is '</span> + regx</span><br><span class="line">    lists =gGetRegList(lines,reObj)</span><br><span class="line">    <span class="keyword">if</span> lists==<span class="keyword">None</span>: <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> jpg <span class="keyword">in</span> lists:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'download JPG URI is '</span> + jpg</span><br><span class="line">        jpg = gGetAbslLink(downloadUrl,jpg) + <span class="string">'.jpg'</span>  </span><br><span class="line">        gDownload(jpg,savePath)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">downloadBaiduImage</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#搜索图片的网址</span></span><br><span class="line">    u=<span class="string">'http://image.baidu.com/search/index?ct=201326592&amp;cl=2&amp;st=-1&amp;lm=-1&amp;nc=1&amp;ie=utf-8&amp;tn=baiduimage&amp;ipn=r&amp;rps=1&amp;pv=&amp;fm=rs8&amp;word=%E9%98%B3%E5%85%89%E5%B0%8F%E6%B8%85%E6%96%B0%E6%84%8F%E5%A2%83%E7%BE%8E%E5%9B%BE&amp;ofr=%E7%BE%8E%E5%9B%BE'</span></span><br><span class="line">    save=<span class="string">'/Users/zhangjunwen/Documents/YunOS/ImageContent/ImagePython/'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'download pic from ['</span> + u +<span class="string">']'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'save to ['</span> +save+<span class="string">'] ...'</span></span><br><span class="line">    gDownloadHtmlJpg(u,save)  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"download finished"</span>  </span><br><span class="line">      </span><br><span class="line">downloadBaiduImage()</span><br></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Image/">Image</a><a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://junwenzhang.com/2015/08/17/批量下载百度图片/" data-title="用Python批量下载百度搜索出来的图片 | junwenZhang&#39;s room" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/08/09/保留Eclipse目录结构，工程无缝导入Android Studio/"  title="保留Eclipse目录结构，工程无缝导入Android Studio">
+ <strong>下一篇：</strong><br/> 
+ <span>保留Eclipse目录结构，工程无缝导入Android Studio
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/08/17/批量下载百度图片/" data-title="用Python批量下载百度搜索出来的图片" data-url="http://junwenzhang.com/2015/08/17/批量下载百度图片/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Android技术/" title="Android技术">Android技术<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/个人站点/" title="个人站点">个人站点<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/旅行运动/" title="旅行运动">旅行运动<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Image/" title="Image">Image<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-Studio/" title="Android Studio">Android Studio<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Eclipse/" title="Eclipse">Eclipse<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Study/" title="Study">Study<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/马拉松/" title="马拉松">马拉松<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mac/" title="Mac">Mac<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Github/" title="Github">Github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://weibo.com/1307558894" target="_blank" title="微博">微博</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.zhihu.com/people/xi-you-80-1" target="_blank" title="知乎">知乎</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m JunwenZhang in Alibaba. <br/>
+			This is my room, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/http://weibo.com/1307558894" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:computer8242@163.om" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="junwenZhang">junwenZhang</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"junwenzhang"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
