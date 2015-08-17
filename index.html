@@ -109,10 +109,11 @@ var _hmt = _hmt || [];
     <div class="article-content">
         
         <p>经常要找一些图片素材，每次都是通过百度来进行搜索找图，但每次打开一张图片下载未免有点效率太低<br>尝试写一个脚本来做自动下载图片，Python是最适合做这个事情的语言了，直接看代码吧</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib, httplib, urlparse  </span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment">#judge url exists or not,by others</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">httpExists</span><span class="params">(url)</span>:</span>  </span><br><span class="line">    host, path = urlparse.urlsplit(url)[<span class="number">1</span>:<span class="number">3</span>]  </span><br><span class="line">    <span class="keyword">if</span> <span class="string">':'</span> <span class="keyword">in</span> host:  </span><br><span class="line">        <span class="comment"># port specified, try to use it  </span></span><br><span class="line">        host, port = host.split(<span class="string">':'</span>, <span class="number">1</span>)  </span><br><span class="line">        <span class="keyword">try</span>:  </span><br><span class="line">            port = int(port)  </span><br><span class="line">        <span class="keyword">except</span> ValueError:  </span><br><span class="line">            <span class="keyword">print</span> <span class="string">'invalid port number %r'</span> % (port,)  </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">else</span>:  </span><br><span class="line">        <span class="comment"># no port specified, use default port  </span></span><br><span class="line">        port = <span class="keyword">None</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        connection = httplib.HTTPConnection(host, port=port)  </span><br><span class="line">        connection.request(<span class="string">"HEAD"</span>, path)  </span><br><span class="line">        resp = connection.getresponse( )  </span><br><span class="line">        <span class="keyword">if</span> resp.status == <span class="number">200</span>:       <span class="comment"># normal 'found' status  </span></span><br><span class="line">            found = <span class="keyword">True</span>  </span><br><span class="line">        <span class="keyword">elif</span> resp.status == <span class="number">302</span>:     <span class="comment"># recurse on temporary redirect  </span></span><br><span class="line">            found = httpExists(urlparse.urljoin(url,resp.getheader(<span class="string">'location'</span>, <span class="string">''</span>)))  </span><br><span class="line">        <span class="keyword">else</span>:                        <span class="comment"># everything else -&gt; not found  </span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">"Status %d %s : %s"</span> % (resp.status, resp.reason, url)  </span><br><span class="line">            found = <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">except</span> Exception, e:  </span><br><span class="line">        <span class="keyword">print</span> e.__class__, e, url  </span><br><span class="line">        found = <span class="keyword">False</span>  </span><br><span class="line">    <span class="keyword">return</span> found  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#get html src,return lines[]</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetHtmlLines</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> : <span class="keyword">return</span>  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> httpExists(url): <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        page = urllib.urlopen(url)     </span><br><span class="line">        html = page.readlines()  </span><br><span class="line">        page.close()  </span><br><span class="line">        <span class="keyword">return</span> html</span><br><span class="line">    <span class="keyword">except</span>:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"gGetHtmlLines() error!"</span>  </span><br><span class="line">        <span class="keyword">return</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">#get html src,return string</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetHtml</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> : <span class="keyword">return</span>  </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> httpExists(url): <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        page = urllib.urlopen(url)     </span><br><span class="line">        html = page.read()  </span><br><span class="line">        page.close()  </span><br><span class="line">        <span class="keyword">return</span> html  </span><br><span class="line">    <span class="keyword">except</span>:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"gGetHtml() error!"</span>  </span><br><span class="line">        <span class="keyword">return</span>  </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetFileName</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span>: <span class="keyword">return</span> <span class="keyword">None</span>  </span><br><span class="line">    <span class="keyword">if</span> url==<span class="string">""</span> : <span class="keyword">return</span> <span class="string">""</span>  </span><br><span class="line">    arr=url.split(<span class="string">"/"</span>)  </span><br><span class="line">    <span class="keyword">return</span> arr[len(arr)-<span class="number">1</span>]  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetAbslLink</span><span class="params">(url,link)</span>:</span>  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'getAbsLink '</span> + url + <span class="string">' link '</span> + link</span><br><span class="line">    <span class="keyword">if</span> url==<span class="keyword">None</span> <span class="keyword">or</span> link == <span class="keyword">None</span> : <span class="keyword">return</span>   </span><br><span class="line">    <span class="keyword">if</span> url==<span class="string">''</span> <span class="keyword">or</span> link==<span class="string">''</span> : <span class="keyword">return</span> url</span><br><span class="line">    <span class="keyword">return</span> link</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gGetRegList</span><span class="params">(linesList,reObj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> linesList==<span class="keyword">None</span> : <span class="keyword">return</span>   </span><br><span class="line">    rtnList=[]  </span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> linesList:  </span><br><span class="line">        matchs = reObj.findall(line)</span><br><span class="line">        <span class="keyword">if</span> matchs!=<span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">for</span> foundStr <span class="keyword">in</span> matchs:</span><br><span class="line">                <span class="keyword">if</span> foundStr <span class="keyword">not</span> <span class="keyword">in</span> rtnList:</span><br><span class="line">                    rtnList.append(foundStr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> rtnList  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownloadWithFilename</span><span class="params">(url,savePath,file)</span>:</span>  </span><br><span class="line">    <span class="keyword">try</span>:  </span><br><span class="line">        urlopen=urllib.URLopener()  </span><br><span class="line">        fp = urlopen.open(url)  </span><br><span class="line">        data = fp.read()  </span><br><span class="line">        fp.close()  </span><br><span class="line">        file=open(savePath + file,<span class="string">'w+b'</span>)  </span><br><span class="line">        file.write(data)  </span><br><span class="line">        file.close()  </span><br><span class="line">    <span class="keyword">except</span> IOError:  </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"download error!"</span>+ url  </span><br><span class="line">          </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownload</span><span class="params">(url,savePath)</span>:</span>  </span><br><span class="line">    fileName = gGetFileName(url)  </span><br><span class="line">    gDownloadWithFilename(url,savePath,fileName)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gDownloadHtmlJpg</span><span class="params">(downloadUrl,savePath)</span>:</span>  </span><br><span class="line">    lines= gGetHtmlLines(downloadUrl)  </span><br><span class="line">    regx = <span class="string">r"""objURL":"(\S+)\.jpg"""</span></span><br><span class="line">    reObj = re.compile(regx)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'regx is '</span> + regx</span><br><span class="line">    lists =gGetRegList(lines,reObj)</span><br><span class="line">    <span class="keyword">if</span> lists==<span class="keyword">None</span>: <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> jpg <span class="keyword">in</span> lists:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'download JPG URI is '</span> + jpg</span><br><span class="line">        jpg = gGetAbslLink(downloadUrl,jpg) + <span class="string">'.jpg'</span>  </span><br><span class="line">        gDownload(jpg,savePath)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">downloadBaiduImage</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#搜索图片的网址</span></span><br><span class="line">    u=<span class="string">'http://image.baidu.com/search/index?ct=201326592&amp;cl=2&amp;st=-1&amp;lm=-1&amp;nc=1&amp;ie=utf-8&amp;tn=baiduimage&amp;ipn=r&amp;rps=1&amp;pv=&amp;fm=rs8&amp;word=%E9%98%B3%E5%85%89%E5%B0%8F%E6%B8%85%E6%96%B0%E6%84%8F%E5%A2%83%E7%BE%8E%E5%9B%BE&amp;ofr=%E7%BE%8E%E5%9B%BE'</span></span><br><span class="line">    save=<span class="string">'/Users/zhangjunwen/Documents/YunOS/ImageContent/ImagePython/'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'download pic from ['</span> + u +<span class="string">']'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'save to ['</span> +save+<span class="string">'] ...'</span></span><br><span class="line">    gDownloadHtmlJpg(u,save)  </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"download finished"</span>  </span><br><span class="line">      </span><br><span class="line">downloadBaiduImage()</span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/08/17/批量下载百度图片/#more">Read More</a>
           
        </p>
     </div>
@@ -171,18 +172,11 @@ var _hmt = _hmt || [];
     <div class="article-content">
         
         <h1 id="前言">前言</h1><p>上一次Android Studio导入YunOS Eclipse工程遗留一个问题：如何在导入之后还可以保持原有的目录结构，方便我们使用Git进行代码版本管理，接下来我们就来解决这个问题<br>Android Studio版本：1.3</p>
-<h1 id="详细步骤">详细步骤</h1><h3 id="1-_打开一个已经存在的android项目（eclipse创建的）">1. 打开一个已经存在的android项目（eclipse创建的）</h3><p><img src="http://img1.tbcdn.cn/L1/461/1/65435b0c5320cf806027f7a9f17f535d7eb24d41" alt="open2"></p>
-<h3 id="2-_进行Project设定">2. 进行Project设定</h3><p><img src="http://img4.tbcdn.cn/L1/461/1/477dabebc600f6b362d1b7c2fb56c6b8ec88036c" alt="open_module_setting"><br>设定SDK版本和OUT目录<br><img src="http://img1.tbcdn.cn/L1/461/1/abde8258cfcd0ea0568d2f634c121a100e8025d4" alt="sdk_out_setting"></p>
-<h3 id="3-_进行Module设定">3. 进行Module设定</h3><p>由于直接打开的Module不能够自动识别dependence关系，需要重新导入一遍module<br>删除掉原有Module<br><img src="http://img3.tbcdn.cn/L1/461/1/13511e9e5ef9981ffc5ec99585b7ac46a9adc52d" alt="remove_module"><br>导入Module，即原有Eclipse工程目录，按照提示直接进行下一步<br><img src="http://img4.tbcdn.cn/L1/461/1/601841d2a512bc15b50d03e963261a4322b62a46" alt="import_module"><br>取消HWDroid，导入的HWDroid Module会自动进行依赖，如果这个地方勾选的话会产生重复依赖<br><img src="http://img1.tbcdn.cn/L1/461/1/112b4600d79fb4d80701f0e4f3f1d0238ff6c193" alt="import_module_setting"></p>
-<h3 id="4-_运行设定">4. 运行设定</h3><p>导入后产生两个Module，Gallery 依赖HWDroid module，这两个Module 的SDK版本要设定为一样<br>进行运行设定，Module选择Gallery<br><img src="http://img4.tbcdn.cn/L1/461/1/1a2695817e401968a1b0283c56846568e22ac993" alt="run_edit"><br><img src="http://img4.tbcdn.cn/L1/461/1/ea551c7b86db2627ecb75541e221b4e1ffa88134" alt="run_edit2"></p>
-<h3 id="5-_签名设定">5. 签名设定</h3><p>custom debug keystore 中导入签名文件<br><img src="http://img4.tbcdn.cn/L1/461/1/69a37a6850f86655ff1c238384740e003a30502c" alt="sign_setting"></p>
-<h3 id="6-_忽略某些文件的编译">6. 忽略某些文件的编译</h3><p>点击运行，可能会提示错误，HWDroid的R文件编译出错，暂时忽略掉它<br><img src="http://img4.tbcdn.cn/L1/461/1/3deec005421be7350d091daa780bc9974b552aae" alt="ignore_error_file"></p>
-<p>如果一切顺利的话，接下来就可以编译运行调试程序了</p>
-<h1 id="后续">后续</h1><p>使用Android Studio之后会产生一些配置文件，在用Git进行代码版本管理之前，记得把这些文件加入.gitignore中去哦，接下来你就可以愉快的使用Android Studio 编码了</p>
-
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/08/09/保留Eclipse目录结构，工程无缝导入Android Studio/#more">Read More</a>
           
        </p>
     </div>
@@ -241,22 +235,11 @@ var _hmt = _hmt || [];
     <div class="article-content">
         
         <h1 id="前言">前言</h1><p>   目前Android studio已经成为google主推的IDE工具，同时也有很多方便的工具可以供使用，例如memory monitor，cpu info等等，本文主要讲述如何将Eclipse工程导入Android studio, 以Gallery相册为例，先行记录下来，避免忘记。因时间有限，遗留了很多问题，希望一起讨论解决</p>
-<h1 id="详细步骤">详细步骤</h1><h3 id="1-下载安装Android_Studio">1.下载安装Android Studio</h3><p><a href="http://www.android-studio.org/" target="_blank" rel="external">http://www.android-studio.org/</a><br><a href="http://developer.android.com/sdk/index.html" target="_blank" rel="external">http://developer.android.com/sdk/index.html</a></p>
-<h3 id="2-导入Eclipse工程">2.导入Eclipse工程</h3><p><img src="http://img2.tbcdn.cn/L1/461/1/f6593c79f4ffb6b35c0e838f206049396e7549d8" alt="import"><br>按照提示进行下一步，Android Stuido会将当前的Eclipse project进行copy到新的路径下，原有的依赖关系会自动设置，无需担心</p>
-<h3 id="3-_配置修改Project">3. 配置修改Project</h3><ul>
-<li>编译时不识别java-symbol，暂时注释(不影响运行调试)<br><img src="http://img4.tbcdn.cn/L1/461/1/87228bdd71b0c4c885bece086960d63a4cedd4ed" alt="hw_symbols"></li>
-<li>因为多个 jar 包里包含了同样的文件（NOTICE.txt/LICENSE.txt），导致打包时因为担心相互覆盖问题而提示出错,所以需要在Module Gallery的build.gradle文件中加入红色部分<br><img src="http://img1.tbcdn.cn/L1/461/1/4e57bbb4d7f52d67d29a74c5d22a119ca79f5e91" alt="build_gradle"></li>
-<li><p>可能是因为AS默认只导入lib目录下的jar包，子文件夹下jar不能自动导入，所以需要拷贝自动导入时缺失的两个lib文件TA4AIDL.jar、tyid.jar到新生成的Android stuido project目录中，以我的为例是：<br>~/workspace/Gallery/gallery/libs,并在Module Gallery的build gradle文件中加入</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/TA4AIDL.jar'</span>)</span></span>                                                                                                                                       </span><br><span class="line">compile <span class="function"><span class="title">files</span><span class="params">(<span class="string">'libs/tyid.jar'</span>)</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>增加签名。Module gallery上点击右键选择open module settings，按照下图进行设置<br><img src="http://img3.tbcdn.cn/L1/461/1/9ae6aa809cd634af1c500018c6d816fd6ed6cbb7" alt="sign_config"><br>选择设置好的签名<br><img src="http://img1.tbcdn.cn/L1/461/1/66fc58fd2eefba2aef7fd5dda3ebd78be99d6dfc" alt="flavor_config"></p>
-</li>
-<li>运行设置。菜单栏Run中点击Edit configuration，选择Target Device为Usb device</li>
-</ul>
-<h1 id="遗留问题">遗留问题</h1><h4 id="1-_Android_Studio_是将工程文件copy到一个新的地方进行修改，Eclipse_project和Android_studio无法共同修改同一份代码">1. Android Studio 是将工程文件copy到一个新的地方进行修改，Eclipse project和Android studio无法共同修改同一份代码</h4><h4 id="2-_Android_Studio_编译时不识别java-symbol的问题需要继续跟进">2. Android Studio 编译时不识别java-symbol的问题需要继续跟进</h4><h4 id="3-_集成Git进行代码版本管理">3. 集成Git进行代码版本管理</h4>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/06/28/AndroidStuido快速导入Eclipse工程/#more">Read More</a>
           
        </p>
     </div>
@@ -314,17 +297,12 @@ var _hmt = _hmt || [];
 </header>
     <div class="article-content">
         
-        <p>记录一下在Mac下机遇Github搭建个人blog的过程<br>主要参考<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a><br>其中需要注意的地方有</p>
-<blockquote>
-<ul>
-<li>_config.yml文件的配置应该为<br>deploy:<br>type: git<br>repo: <a href="https://github.com/junwenZhang/junwenZhang.github.io.git" target="_blank" rel="external">https://github.com/junwenZhang/junwenZhang.github.io.git</a><br>branch: master<br>上述repo的方式为https提交，每次hexo 部署时都需要输入用户名和密码，比较麻烦，推荐使用下面的配置<br>下面的方式为ssh提交，无须输入用户名和密码<br>deploy:<br>type: git<br>repo: git@github.com:junwenZhang/junwenZhang.github.io.git<br>branch: master</li>
-<li>Hexo 部署失败<br>hexo deploy命令显示ERROR Deployer not found : git<br>请运行下npm install hexo-deployer-git —save<br>再hexo g，hexo d即可</li>
-</ul>
-</blockquote>
-
+        <p>记录一下在Mac下机遇Github搭建个人blog的过程<br>主要参考<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/">如何搭建一个独立博客——简明Github Pages与Hexo教程</a><br>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/06/17/Mac下基于Github搭建个人Blog/#more">Read More</a>
           
        </p>
     </div>
@@ -383,181 +361,11 @@ var _hmt = _hmt || [];
     <div class="article-content">
         
         <p>目标 : 北马<br>参赛时间 : 2015.9.20<br>训练时间 : 2015.6.15-2015.9.20<br>训练计划 : 共14周</p>
-<table>
-<thead>
-<tr>
-<th>周数</th>
-<th style="text-align:right">周一</th>
-<th style="text-align:center">周二</th>
-<th>周三</th>
-<th>周四</th>
-<th>周五</th>
-<th>周六</th>
-<th>周日</th>
-<th>总公里数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td style="text-align:right">5</td>
-<td style="text-align:center">0</td>
-<td>7</td>
-<td>5</td>
-<td>0</td>
-<td>10</td>
-<td>0</td>
-<td>27</td>
-</tr>
-<tr>
-<td>2</td>
-<td style="text-align:right">6</td>
-<td style="text-align:center">0</td>
-<td>7</td>
-<td>6</td>
-<td>0</td>
-<td>12</td>
-<td>0</td>
-<td>31</td>
-</tr>
-<tr>
-<td>3</td>
-<td style="text-align:right">6</td>
-<td style="text-align:center">0</td>
-<td>8</td>
-<td>6</td>
-<td>0</td>
-<td>14</td>
-<td>0</td>
-<td>34</td>
-</tr>
-<tr>
-<td>4</td>
-<td style="text-align:right">7</td>
-<td style="text-align:center">0</td>
-<td>8</td>
-<td>7</td>
-<td>0</td>
-<td>16</td>
-<td>0</td>
-<td>38</td>
-</tr>
-<tr>
-<td>5</td>
-<td style="text-align:right">8</td>
-<td style="text-align:center">0</td>
-<td>8</td>
-<td>8</td>
-<td>0</td>
-<td>18</td>
-<td>0</td>
-<td>42</td>
-</tr>
-<tr>
-<td>6</td>
-<td style="text-align:right">7</td>
-<td style="text-align:center">0</td>
-<td>9</td>
-<td>7</td>
-<td>0</td>
-<td>20</td>
-<td>0</td>
-<td>43</td>
-</tr>
-<tr>
-<td>7</td>
-<td style="text-align:right">7</td>
-<td style="text-align:center">0</td>
-<td>9</td>
-<td>8</td>
-<td>0</td>
-<td>21</td>
-<td>0</td>
-<td>45</td>
-</tr>
-<tr>
-<td>8</td>
-<td style="text-align:right">5</td>
-<td style="text-align:center">0</td>
-<td>7</td>
-<td>0</td>
-<td>0</td>
-<td>23</td>
-<td>0</td>
-<td>35</td>
-</tr>
-<tr>
-<td>9</td>
-<td style="text-align:right">6</td>
-<td style="text-align:center">0</td>
-<td>8</td>
-<td>6</td>
-<td>0</td>
-<td>24</td>
-<td>0</td>
-<td>44</td>
-</tr>
-<tr>
-<td>10</td>
-<td style="text-align:right">6</td>
-<td style="text-align:center">0</td>
-<td>8</td>
-<td>6</td>
-<td>0</td>
-<td>29</td>
-<td>0</td>
-<td>49</td>
-</tr>
-<tr>
-<td>11</td>
-<td style="text-align:right">7</td>
-<td style="text-align:center">0</td>
-<td>10</td>
-<td>7</td>
-<td>0</td>
-<td>30</td>
-<td>0</td>
-<td>54</td>
-</tr>
-<tr>
-<td>12</td>
-<td style="text-align:right">6</td>
-<td style="text-align:center">0</td>
-<td>9</td>
-<td>7</td>
-<td>0</td>
-<td>32</td>
-<td>0</td>
-<td>54</td>
-</tr>
-<tr>
-<td>13</td>
-<td style="text-align:right">5</td>
-<td style="text-align:center">0</td>
-<td>7</td>
-<td>5</td>
-<td>0</td>
-<td>18</td>
-<td>0</td>
-<td>35</td>
-</tr>
-<tr>
-<td>14</td>
-<td style="text-align:right">5</td>
-<td style="text-align:center">0</td>
-<td>10</td>
-<td>5</td>
-<td>0</td>
-<td>42</td>
-<td>0</td>
-<td>62</td>
-</tr>
-</tbody>
-</table>
-
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/06/16/马拉松计划/#more">Read More</a>
           
        </p>
     </div>
@@ -615,11 +423,12 @@ var _hmt = _hmt || [];
 </header>
     <div class="article-content">
         
-        <p>相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯<br>但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码<br>   ExifInterface exif = new ExifInterface(mFilePath);<br>   String tmp = exif.getAttribute(ExifInterface.TAG_FLASH);<br>   //Exif 2.2 Specifies the resulting Flash tag values<br>   //0000.H = Flash did not fire<br>   //0010.H = Flash did not fire, compulsory flash mode<br>   //0018.H = Flash did not fire, auto mode</p>
-
+        <p>相册中的闪关灯的开关值是通过exif parse出来的,Exif 2.1标准中通过判断返回值为0则认为关闭了闪关灯<br>但是Exif 2.2 标准中规定了有3个值可以认为是关闭了闪关灯，见下图代码<br>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/06/16/JPG-Flash-Flag/#more">Read More</a>
           
        </p>
     </div>
